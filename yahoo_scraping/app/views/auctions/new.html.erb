@@ -1,0 +1,36 @@
+<h1>価格推移したいURLとメールアドレスを入力してください</h1>
+
+<hr>
+
+<!-- オークションの数が限界でも間違って登録ページに入った時、Topページに戻るように表示する。 -->
+<% if @auctions_count >= 10 %>
+    <h2>
+        登録できる数が限界になりました。<br>
+        Topページに戻り、商品を削除してからご利用ください。
+        <%= link_to "Topページ", root_path %>
+    </h2>
+<% else %>
+    <!-- 登録に誤りがあった際にエラーを表示する -->
+    <% if flash[:notice] %>
+        <div>
+            <h2><%= flash[:notice] %></h2>
+        </div>
+    <% end %>
+
+    <%= form_with model: @auction do |auction| %>
+        <div>
+            URL<br>
+            <%= auction.text_field :url %>
+        </div>
+        <br>
+        <div>
+            メールアドレス<br>
+            <%= auction.text_field :email %>
+        </div>
+        <br>
+        <div>
+            <%= auction.submit "登録" %>
+        </div>
+    <% end %>
+<% end %>
+

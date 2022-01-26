@@ -1,0 +1,44 @@
+<h1>YahooScraping</h1>
+
+<hr>
+
+<p>価格推移したい商品を10個まで表示できます</p>
+
+<!-- スクレイピングしている商品が10に達成したら、登録ページのURLを遮断する -->
+<% if @auctions_count >= 10 %>
+    <h2>登録できる数が限界になりました。どれか削除してからご利用ください</h2>
+<% else %>
+    <%= link_to "価格推移したい商品登録ページ", new_auction_path %>
+<% end %>
+
+<hr>
+
+<!-- 価格推移している商品を表示 -->
+<table border=1>
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>商品名</th>
+            <th>現在の値段</th>
+            <th>開始日時</th>
+            <th>終了日時</th>
+            <th>入札件数</th>
+            <th>残り時間</th>
+            <th>削除</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @auctions.each do |auction| %>
+        <tr>
+            <td></td>
+            <td><%= auction.proname %></td>
+            <td><%= auction.price %></td>
+            <td><%= auction.start %></td>
+            <td><%= auction.finish %></td>
+            <td><%= auction.bid_number %></td>
+            <td><%= auction.remain_time %></td>
+            <td><%= link_to "削除", "/auctions/#{auction.id}", data: { turbo_method: :delete } %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
